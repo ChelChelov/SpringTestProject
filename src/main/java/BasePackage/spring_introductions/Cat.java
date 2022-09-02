@@ -1,7 +1,5 @@
 package BasePackage.spring_introductions;
 
-import org.springframework.stereotype.Component;
-
 //@Component
 public class Cat implements Pet{
 
