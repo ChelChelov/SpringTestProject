@@ -17,6 +17,7 @@ public class UniversityLibrary extends AbstractLibrary {
     }
 
     public String returnBook() {
+        int i =10/0;
         System.out.println("Return book to UniversityLibrary");
         return "The Witcher";
     }
