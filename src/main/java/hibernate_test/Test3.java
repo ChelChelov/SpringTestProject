@@ -5,8 +5,10 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
+import java.util.List;
 
-public class Test1 {
+
+public class Test3 {
     public static void main(String[] args) {
         SessionFactory factory = new Configuration()
                 .configure("hibernate.cfg.xml")//read hibernate-config file. If the name is default, it isn't wanted a way in scopes
@@ -15,16 +17,24 @@ public class Test1 {
 
         try {
             Session session = factory.getCurrentSession();
-            Employee employee = new Employee("Aleksandra", "Smirnova"
-                    , "HR", 800);
-            session.beginTransaction();//in Java I must open each transaction
-            session.save(employee);
-            session.getTransaction().commit();//and close each transaction (use commit)
+            session.beginTransaction();
+
+//            List<Employee> employees = session.createQuery("from Employee")
+//                            .getResultList();
+
+            List<Employee> employees = session.createQuery("from Employee " +
+                            "where salary > 800")
+                    .getResultList();
+
+            for (Employee e:
+                 employees) {
+                System.out.println(e);
+            }
+
+            session.getTransaction().commit();
 
             System.out.println("Done!");
-            System.out.println(employee);
-        }
-        finally {
+        } finally {
             factory.close();
         }
     }
