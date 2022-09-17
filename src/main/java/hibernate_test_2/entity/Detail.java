@@ -9,7 +9,7 @@ import javax.persistence.*;
 @Getter
 @Setter
 @NoArgsConstructor
-@ToString
+@ToString(exclude = "employee")
 public class Detail {
 
     @Id
@@ -25,6 +25,9 @@ public class Detail {
 
     @Column(name = "email")
     private String email;
+
+    @OneToOne(mappedBy = "empDetail", cascade = {CascadeType.PERSIST, CascadeType.REFRESH})
+    private Employee employee;
 
     public Detail(String city, String phoneNumber, String email) {
         this.city = city;
