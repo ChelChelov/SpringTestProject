@@ -1,5 +1,6 @@
-package hibernate_test_2.entity;
+package hibernate_one_to_many_bi.entity;
 
+import hibernate_one_to_one.entity.Detail;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -12,30 +13,31 @@ import javax.persistence.*;
 @Getter
 @Setter
 @NoArgsConstructor
-@ToString(exclude = "empDetail")
+@ToString(exclude = "department")
 public class Employee {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private int id;
+
     @Column(name = "name")
     private String name;
+
     @Column(name = "surname")
     private String surname;
-    @Column(name = "department")
-    private String department;
+
     @Column(name = "salary")
     private int salary;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "details_id")
-    private Detail empDetail;
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.DETACH
+            , CascadeType.REFRESH, CascadeType.MERGE})
+    @JoinColumn(name = "department_id")
+    private Department department;
 
-    public Employee(String name, String surname, String department, int salary) {
+    public Employee(String name, String surname, int salary) {
         this.name = name;
         this.surname = surname;
-        this.department = department;
         this.salary = salary;
     }
 }
